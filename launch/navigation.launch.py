@@ -15,7 +15,6 @@ def generate_launch_description():
     # Navigation
     navigation = GroupAction(
         actions=[
-            SetRemap(src="/cmd_vel", dst="/ap/cmd_vel"),
             IncludeLaunchDescription(
                 PythonLaunchDescriptionSource(
                     str(
@@ -37,7 +36,7 @@ def generate_launch_description():
             ),
         ]
     )
-
+    
     # RViz.
     rviz = Node(
         package="rviz2",
@@ -54,13 +53,25 @@ def generate_launch_description():
         ],
         condition=IfCondition(LaunchConfiguration("rviz")),
     )
+    twist_stamper = Node(
+        package="twist_stamper",
+        executable="twist_stamper",
+        parameters=[
+            {"frame_id": "base_link"},
+        ],
+        remappings=[
+            ("cmd_vel_in", "cmd_vel"),
+            ("cmd_vel_out", "ap/cmd_vel"),
+        ],
+    )
 
     return LaunchDescription(
         [
             DeclareLaunchArgument(
                 "rviz", default_value="true", description="Open RViz."
             ),
-            rviz,
             navigation,
+            twist_stamper,
+            rviz
         ]
     )

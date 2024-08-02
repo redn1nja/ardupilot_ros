@@ -1,5 +1,6 @@
 bt_navigator:
   ros__parameters:
+    enable_stamped_cmd_vel: True
     use_sim_time: &default_use_sim_time True
     global_frame: map
     robot_base_frame: base_link
