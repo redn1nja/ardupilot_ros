@@ -30,13 +30,13 @@ def generate_launch_description():
                     "params_file": FindPackageShare("ardupilot_ros").find(
                         "ardupilot_ros"
                     )
-                    + "/config"
-                    + "/navigation.yaml",
+                                   + "/config"
+                                   + "/navigation.yaml",
                 }.items(),
             ),
         ]
     )
-    
+
     # RViz.
     rviz = Node(
         package="rviz2",
@@ -50,6 +50,12 @@ def generate_launch_description():
                     "navigation.rviz",
                 )
             ),
+            "--ros-args",
+            "--log-level",
+            "error"
+        ],
+        parameters=[
+            {"use_sim_time": True},
         ],
         condition=IfCondition(LaunchConfiguration("rviz")),
     )

@@ -26,6 +26,9 @@ def generate_launch_description():
             FindPackageShare("ardupilot_ros").find("ardupilot_ros") + "/config",
             "-configuration_basename",
             "cartographer.lua",
+            "--ros-args",
+            "--log-level",
+            "error"
         ],
         output="screen",
         remappings=[
